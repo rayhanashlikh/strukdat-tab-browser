@@ -135,91 +135,79 @@ void swapData()
 
 void hapusData(dll **head_ref, dll *del)
 {
-    /* base case */
     if (*head_ref == NULL || del == NULL)
     {
         return;
     }
-    /* If node to be deleted is head node */
     if (*head_ref == del)
     {
         *head_ref = del->next;
     }
-    /* Change next only if node to be deleted is NOT
-       the last node */
     if (del->next != NULL)
     {
         del->next->prev = del->prev;
     }
-    /* Change prev only if node to be deleted is NOT
-       the first node */
     if (del->prev != NULL)
     {
         del->prev->next = del->next;
     }
-    /* Finally, free the memory occupied by del*/
     free(del);
 }
 
-/* Function to delete the node at the given position
-   in the doubly linked list */
 void hapusPosisi(dll **head_ref, int n)
 {
-    /* if list in NULL or invalid position is given */
     if (*head_ref == NULL || n <= 0)
         return;
 
     dll *current = *head_ref;
     int i;
 
-    /* traverse up to the node at position 'n' from
-       the beginning */
     for (i = 1; current != NULL && i < n; i++)
     {
         current = current->next;
     }
-    /* if 'n' is greater than the number of nodes
-       in the doubly linked list */
     if (current == NULL)
     {
         return;
     }
-    /* delete the node pointed to by 'current' */
     hapusData(head_ref, current);
     cout << "Data terhapus\n";
 }
 
 int cariData(dll **head_ref, string x)
 {
-
-    // Stores head Node
     dll *temp = *head_ref;
 
-    // Stores position of the integer
-    // in the doubly linked list
     int pos = 0;
 
-    // Traverse the doubly linked list
     while (temp->judul != x && temp->next != NULL)
     {
 
-        // Update pos
         pos++;
 
-        // Update temp
         temp = temp->next;
     }
 
-    // If the integer not present
-    // in the doubly linked list
     if (temp->judul != x)
     {
         return -1;
     }
-    // If the integer present in
-    // the doubly linked list
 
     return (pos + 1);
+}
+
+void cariDataTab(){
+    dll *bantu;
+    string dataCari;
+    cout << "Mau cari data berapa? "; getline(cin, dataCari);
+    bantu = head;
+    do{
+        if(dataCari == bantu -> judul){
+            cout << "Data Ketemu\n";
+        }
+        bantu = bantu -> next;
+    }while(bantu != head);
+
 }
 
 void tampildepan()
@@ -261,7 +249,8 @@ int main()
         cout << " | 3. Hapus Tab                          |" << endl;
         cout << " | 4. Tampil Data                        |" << endl;
         cout << " | 5. Swap Tab                           |" << endl;
-        cout << " | 6. Keluar Program                     |" << endl;
+        cout << " | 6. Cari Tab                           |" << endl;
+        cout << " | 7. Keluar Program                     |" << endl;
         cout << " +=======================================+" << endl;
         cout << " Pilihan Anda [1-10]: ";
         cin >> pilih;
@@ -270,7 +259,7 @@ int main()
         if (pilih == 1)
         {
             system("cls");
-            addData();
+            addData(); // Error ketika data yang ditambahkan sudah dilakukan hapus data
         }
         if (pilih == 2)
         {
@@ -295,6 +284,11 @@ int main()
             swapData();
         }
         if (pilih == 6)
+        {
+            system("cls");
+            cariDataTab();
+        }
+        if (pilih == 7)
         {
             system("cls");
             return 0;
